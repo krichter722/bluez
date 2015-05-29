@@ -1,6 +1,8 @@
 AC_PREREQ(2.60)
 AC_INIT(bluez, 5.30)
 
+AC_CONFIG_MACRO_DIRS([m4])
+
 AM_INIT_AUTOMAKE([foreign subdir-objects color-tests silent-rules
 					tar-pax no-dist-gzip dist-xz])
 AC_CONFIG_HEADERS(config.h)

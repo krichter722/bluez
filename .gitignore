@@ -30,6 +30,7 @@ autom4te.cache
 test-driver
 test-suite.log
 coverage.info
+m4/
 
 coverage
 lib/bluez.pc
