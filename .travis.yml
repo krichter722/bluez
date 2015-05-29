@@ -1,0 +1,29 @@
+language: c
+compiler:
+ - gcc
+ - clang
+before_install:
+ - sudo apt-get update -qq
+ - sudo apt-get build-dep -qq bluez
+# gperf and gtk-doc required by systemd
+ - sudo apt-get install autoconf libtool m4 pkg-config libglib2.0-dev libglib2.0 gperf gtk-doc-tools libcap-dev libmount-dev util-linux
+ - wget http://ftp.u-tx.net/gnu/libtool/libtool-2.4.6.tar.xz && tar xf libtool-2.4.6.tar.xz && cd libtool-2.4.6 && ./configure && make -j24 && sudo make install && cd ..
+ - wget http://pkgconfig.freedesktop.org/releases/pkg-config-0.28.tar.gz && tar xf pkg-config-0.28.tar.gz && cd pkg-config-0.28 && ./configure && make -j24 && sudo make install && cd ..
+# ftp.gnome.org randomly takes for ever (might be a blockage against attacks) -> use ftp://ftp.freebsd.org/pub/FreeBSD/ports/distfiles/gnome2/glib-2.28.8.tar.xz
+# ftp://ftp.freebsd.org/pub/FreeBSD/ports/distfiles/gnome2/glib-2.28.8.tar.xz doesn't work
+# ftp://ftp.gimp.org/pub/glib/2.28/glib-2.28.8.tar.xz takes forever
+ - wget ftp://pd.tuwien.ac.at/graphics/gimp/glib/2.28/glib-2.28.8.tar.xz && tar xf glib-2.28.8.tar.xz && cd glib-2.28.8 && ./configure && make -j24 && sudo make install && cd ..
+# without up-to-date coreutils configure of systemd fails with error `configure: error: *** ln doesn't support --relative ***`
+ - wget http://ftp.gnu.org/gnu/coreutils/coreutils-8.23.tar.xz && tar xf coreutils-8.23.tar.xz && cd coreutils-8.23 && ./configure && make -j24 && sudo make install && cd ..
+# installation of apt packages libmount-dev and util-linux doesn't fix `configure: error: *** libmount support required but libraries not found`
+ - wget https://www.kernel.org/pub/linux/utils/util-linux/v2.26/util-linux-2.26.2.tar.xz && tar xf util-linux-2.26.2.tar.xz && cd util-linux-2.26.2 && ./configure && make -j24 && sudo make install && cd ..
+# udev has been merge into systemd
+ - wget http://www.freedesktop.org/software/systemd/systemd-220.tar.xz && tar xf systemd-220.tar.xz && cd systemd-220 && ./configure && make -j24 && sudo make install && cd ..
+# use autoconf 2.69 in order to avoid a bunch of autoconf issues
+ - wget http://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.xz && tar xf autoconf-2.69.tar.xz && cd autoconf-2.69 && ./configure && make -j24 && sudo make install && cd ..
+
+# using automake git causes `doc/amhello-1.0.tar.gz: recipe failed.` error for any tag and master -> use tarball
+ - wget ftp://ftp.gnu.org/gnu/automake/automake-1.14.1.tar.xz && tar xf automake-1.14.1.tar.xz && cd automake-1.14.1 && ./configure && make && sudo make install && cd ..
+# using dbus git fails because autogen.sh doesn't manage to pick up the right automake version
+ - wget http://dbus.freedesktop.org/releases/dbus/dbus-1.9.16.tar.gz && tar xf dbus-1.9.16.tar.gz && cd dbus-1.9.16 && ./configure && make && sudo make install && cd ..
+script: ./bootstrap && ./configure --enable-tests && make -j16 && sudo make install
