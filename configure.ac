@@ -5,6 +5,7 @@ AC_CONFIG_MACRO_DIRS([m4])
 
 AM_INIT_AUTOMAKE([foreign subdir-objects color-tests silent-rules
 					tar-pax no-dist-gzip dist-xz])
+LT_INIT
 AC_USE_SYSTEM_EXTENSIONS
 AC_CONFIG_HEADERS(config.h)
 
@@ -22,7 +23,6 @@ AC_LANG_C
 
 AC_C_RESTRICT
 
-LT_INIT
 AC_PROG_RANLIB
 AC_PROG_CC
 AM_PROG_CC_C_O
