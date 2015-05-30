@@ -33,8 +33,6 @@ AC_PROG_MKDIR_P
 m4_define([_LT_AC_TAGCONFIG], [])
 m4_ifdef([AC_LIBTOOL_TAGS], [AC_LIBTOOL_TAGS([])])
 
-AC_DISABLE_STATIC
-
 if (test "$USE_MAINTAINER_MODE" = "yes"); then
 	AC_CHECK_PROG(enable_coverage, [lcov], [yes], [no])
 	AC_CHECK_PROG(enable_dbus_run_session, [dbus-run-session], [yes])
