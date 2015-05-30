@@ -1,6 +1,8 @@
 
 AM_MAKEFLAGS = --no-print-directory
 
+ACLOCAL_AMFLAGS = -I m4
+
 lib_LTLIBRARIES =
 
 noinst_LIBRARIES =
