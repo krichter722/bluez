@@ -5,5 +5,10 @@ compiler:
 before_install:
  - sudo apt-get update -qq
  - sudo apt-get build-dep -qq bluez
-script: ./bootstrap && ./configure --enable-tests && make -j16
+ - sudo apt-get install autoconf
+# using automake git causes `doc/amhello-1.0.tar.gz: recipe failed.` error for any tag and master -> use tarball
+ - wget ftp://ftp.gnu.org/gnu/automake/automake-1.14.1.tar.xz && tar xf automake-1.14.1.tar.xz && cd automake-1.14.1 && ./configure && make && sudo make install && cd ..
+# using dbus git fails because autogen.sh doesn't manage to pick up the right automake version
+ - wget http://dbus.freedesktop.org/releases/dbus/dbus-1.9.16.tar.gz && tar xf dbus-1.9.16.tar.gz && cd dbus-1.9.16 && ./configure && make && sudo make install && cd ..
+script: ./bootstrap && ./configure --enable-tests && make -j16 && sudo make install
 
