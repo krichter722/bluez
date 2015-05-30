@@ -5,6 +5,17 @@ AC_CONFIG_MACRO_DIRS([m4])
 
 AM_INIT_AUTOMAKE([foreign subdir-objects color-tests silent-rules
 					tar-pax no-dist-gzip dist-xz])
+
+AC_PROG_RANLIB
+AC_PROG_CC
+AM_PROG_CC_C_O
+AC_PROG_CC_PIE
+AC_PROG_INSTALL
+AC_PROG_MKDIR_P
+AM_PROG_AR
+AC_PROG_LIBTOOL
+
+LT_INIT
 AC_CONFIG_HEADERS(config.h)
 AC_USE_SYSTEM_EXTENSIONS
 
@@ -22,19 +33,10 @@ AC_LANG_C
 
 AC_C_RESTRICT
 
-LT_INIT
-AC_PROG_RANLIB
-AC_PROG_CC
-AM_PROG_CC_C_O
-AC_PROG_CC_PIE
-AC_PROG_INSTALL
-AC_PROG_MKDIR_P
-
 m4_define([_LT_AC_TAGCONFIG], [])
 m4_ifdef([AC_LIBTOOL_TAGS], [AC_LIBTOOL_TAGS([])])
 
 AC_DISABLE_STATIC
-AC_PROG_LIBTOOL
 
 if (test "$USE_MAINTAINER_MODE" = "yes"); then
 	AC_CHECK_PROG(enable_coverage, [lcov], [yes], [no])
